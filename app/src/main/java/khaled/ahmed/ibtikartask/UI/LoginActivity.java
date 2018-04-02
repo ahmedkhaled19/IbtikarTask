@@ -1,7 +1,9 @@
 package khaled.ahmed.ibtikartask.UI;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import khaled.ahmed.ibtikartask.R;
 
 public class LoginActivity extends AppCompatActivity {
 

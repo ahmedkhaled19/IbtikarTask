@@ -1,6 +1,5 @@
 package khaled.ahmed.ibtikartask.Model;
 
-import com.altatawwar.carwash.Utils.GeneralMethods;
 
 import java.util.concurrent.TimeUnit;
 
@@ -14,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
     private static Retrofit retrofit = null;
-    private static String baseUrl = GeneralMethods.Base_Url;
+    private static String baseUrl = "";
 
     private static Retrofit getClient() {
 

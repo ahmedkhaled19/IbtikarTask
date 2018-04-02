@@ -5,4 +5,20 @@ package khaled.ahmed.ibtikartask.Objects;
  */
 
 public class Tweets {
+
+    private String content;
+    private String date;
+
+    public Tweets(String content, String date) {
+        this.content = content;
+        this.date = date;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public String getDate() {
+        return date;
+    }
 }

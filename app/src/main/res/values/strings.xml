@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">IbtikarTask</string>
+    <string name="welcome">Welcome to our app</string>
 </resources>
