@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import khaled.ahmed.ibtikartask.Objects.User;
+import khaled.ahmed.ibtikartask.Objects.Users;
 
 /**
  * Created by ah.khaled1994@gmail.com on 4/2/2018.
@@ -20,10 +20,15 @@ public class SharedData {
     private static final SharedData ourInstance = new SharedData();
 
     /*** shared pref tags*/
-    public static String isLogged = "isLogged";
-    public static String saved_user = "saved_user";
-    public static String UID = "UID";
-    public static String LANGUAGE = "LANGUAGE";
+    private String isLogged = "isLogged";
+    private String saved_user = "saved_user";
+    private String TOKEN = "TOKEN";
+    private String LANGUAGE = "LANGUAGE";
+    private String UID = "UID";
+    private String NAME = "NAME";
+    private String PIMAGE = "PIMAGE";
+    private String SECRET = "SECRET";
+
 
     /*** shared pref tools*/
     private Context context;
@@ -44,16 +49,16 @@ public class SharedData {
         return ourInstance;
     }
 
-    public void saveUser(ArrayList<User> user) {
+    public void saveUsers(ArrayList<Users> users) {
         Gson gson = new Gson();
-        String userStr = gson.toJson(user);
+        String userStr = gson.toJson(users);
         editor.putString(saved_user, userStr);
         editor.apply();
     }
 
-    public ArrayList<User> getUser() {
+    public ArrayList<Users> getUsers() {
         Gson gson = new Gson();
-        Type type = new TypeToken<User>() {
+        Type type = new TypeToken<Users>() {
         }.getType();
         String json = preferences.getString(saved_user, "");
         return gson.fromJson(json, type);
@@ -77,12 +82,48 @@ public class SharedData {
         editor.apply();
     }
 
-    public String getUID() {
+    public String getToken() {
+        return preferences.getString(TOKEN, "");
+    }
+
+    public void setToken(String uid) {
+        editor.putString(TOKEN, uid);
+        editor.apply();
+    }
+
+    public String getID() {
         return preferences.getString(UID, "");
     }
 
-    public void setUID(String uid) {
+    public void setID(String uid) {
         editor.putString(UID, uid);
+        editor.apply();
+    }
+
+    public String getNAME() {
+        return preferences.getString(NAME, "");
+    }
+
+    public void setNAME(String name) {
+        editor.putString(NAME, name);
+        editor.apply();
+    }
+
+    public String getProfile() {
+        return preferences.getString(PIMAGE, "");
+    }
+
+    public void setPIMAGE(String url) {
+        editor.putString(PIMAGE, url);
+        editor.apply();
+    }
+
+    public String getSECRETToken() {
+        return preferences.getString(SECRET, "");
+    }
+
+    public void setSecretToken(String secretToken) {
+        editor.putString(SECRET, secretToken);
         editor.apply();
     }
 }

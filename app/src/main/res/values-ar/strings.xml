@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="welcome">Welcome to our app</string>
+    <string name="app_name">ابتكار تاسك</string>
+    <string name="login">تسجيل الدخول بواسطة تويتر</string>
+    <string name="changeLang">ChangeLanguage</string>
+    <string name="logout">Log out</string>
+
+
 </resources>

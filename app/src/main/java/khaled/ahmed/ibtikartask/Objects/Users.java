@@ -6,21 +6,22 @@ import java.util.ArrayList;
  * Created by ah.khaled1994@gmail.com on 4/2/2018.
  */
 
-public class User {
+public class Users {
     private String id;
     private String name;
+    private String handle;
     private String imageURL;
     private String backroundURl;
     private String bio;
-    private ArrayList<Tweets> tweets;
 
-    public User(String id, String name, String imageURL, String backroundURl, String bio, ArrayList<Tweets> tweets) {
+
+    public Users(String id, String name, String handle, String imageURL, String backroundURl, String bio) {
         this.id = id;
         this.name = name;
+        this.handle = handle;
         this.imageURL = imageURL;
         this.backroundURl = backroundURl;
         this.bio = bio;
-        this.tweets = tweets;
     }
 
     public String getId() {
@@ -43,7 +44,7 @@ public class User {
         return bio;
     }
 
-    public ArrayList<Tweets> getTweets() {
-        return tweets;
+    public String getHandle() {
+        return handle;
     }
 }

@@ -3,16 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray"
+    android:background="@color/blue"
     android:gravity="center"
     tools:context="khaled.ahmed.ibtikartask.UI.SplashActivity">
 
-    <TextView
-        style="?android:attr/textAppearanceLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/welcome"
-        android:textColor="@color/black"
-        android:textStyle="bold" />
+
+
+
 
 </LinearLayout>

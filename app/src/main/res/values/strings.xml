@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">IbtikarTask</string>
-    <string name="welcome">Welcome to our app</string>
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">oX5OfwAaGPGgBuAVZo9ka3guZ</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">GgZumDluKJEkP7PNop6XTbuFgOC4Lklb81rjL2I9Rs0Ao5zIbu</string>
+    <string name="login">Login via twitter</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="changeLang">Change Language</string>
+    <string name="logout">Log out</string>
 </resources>

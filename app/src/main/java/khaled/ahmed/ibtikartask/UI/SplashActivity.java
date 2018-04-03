@@ -17,8 +17,8 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (SharedData.getInstance().IsLogged()) {
-                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                if (SharedData.getInstance().Edit(SplashActivity.this).IsLogged()) {
+                    startActivity(new Intent(SplashActivity.this, HomeActivity.class));
                 } else {
                     startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                 }
