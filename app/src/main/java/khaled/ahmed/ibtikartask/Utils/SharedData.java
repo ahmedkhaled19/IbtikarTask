@@ -58,7 +58,7 @@ public class SharedData {
 
     public ArrayList<Users> getUsers() {
         Gson gson = new Gson();
-        Type type = new TypeToken<Users>() {
+        Type type = new TypeToken<ArrayList<Users>>() {
         }.getType();
         String json = preferences.getString(saved_user, "");
         return gson.fromJson(json, type);

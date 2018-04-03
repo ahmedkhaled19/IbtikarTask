@@ -3,8 +3,11 @@
 
     <string name="app_name">ابتكار تاسك</string>
     <string name="login">تسجيل الدخول بواسطة تويتر</string>
-    <string name="changeLang">ChangeLanguage</string>
-    <string name="logout">Log out</string>
+    <string name="changeLang">تغير اللغة</string>
+    <string name="logout">تسجيل خروج</string>
+    <string name="home">الرئيسية</string>
+    <string name="notData">لا يوجد بيانات..برجاء فتح الانترنت</string>
+    <string name="nointernet">لا يوجد انترنت</string>
 
 
 </resources>

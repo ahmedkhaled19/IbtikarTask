@@ -12,6 +12,8 @@ public interface HomeView {
 
     void SetDataLocal(ArrayList<Users> list);
 
-    void SetData(ArrayList<Users> list);
+    void SetDataFirstTime(ArrayList<Users> list);
+
+    void SetDataReload(ArrayList<Users> list);
 
 }

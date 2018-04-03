@@ -4,14 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:orientation="vertical"
     tools:context="khaled.ahmed.ibtikartask.UI.LoginActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/twitter_logo" />
 
 
     <Button
         android:id="@+id/login"
+        style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/blue"
+        android:padding="8dp"
         android:text="@string/login"
-        android:textAllCaps="false" />
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
 </LinearLayout>
