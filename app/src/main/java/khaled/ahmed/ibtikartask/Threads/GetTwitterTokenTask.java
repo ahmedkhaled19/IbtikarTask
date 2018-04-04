@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import khaled.ahmed.ibtikartask.Presnters.LoginPresenter;
 import khaled.ahmed.ibtikartask.R;
-import khaled.ahmed.ibtikartask.Threads.AccessTokenGetTask;
 import khaled.ahmed.ibtikartask.UI.LoginActivity;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -107,6 +106,7 @@ public class GetTwitterTokenTask extends AsyncTask<String, Void, String> {
             dialog.setCancelable(true);
             progressBar.dismiss(); //dismiss progress dialog when task finished.
         } else {
+            progressBar.dismiss();
             Toast.makeText(activity, "Network Error!", Toast.LENGTH_SHORT).show();
         }
     }

@@ -27,8 +27,10 @@ public class SharedData {
     private String UID = "UID";
     private String NAME = "NAME";
     private String PIMAGE = "PIMAGE";
+    private String BACKIMAGE = "BACKIMAGE";
     private String SECRET = "SECRET";
-
+    private String FIRST_TIME = "FT";
+    private String ACCOUNTS = "ACCOUNT";
 
     /*** shared pref tools*/
     private Context context;
@@ -61,6 +63,21 @@ public class SharedData {
         Type type = new TypeToken<ArrayList<Users>>() {
         }.getType();
         String json = preferences.getString(saved_user, "");
+        return gson.fromJson(json, type);
+    }
+
+    public void saveAccount(ArrayList<Users> users) {
+        Gson gson = new Gson();
+        String userStr = gson.toJson(users);
+        editor.putString(ACCOUNTS, userStr);
+        editor.apply();
+    }
+
+    public ArrayList<Users> getAccount() {
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<Users>>() {
+        }.getType();
+        String json = preferences.getString(ACCOUNTS, "");
         return gson.fromJson(json, type);
     }
 
@@ -118,6 +135,15 @@ public class SharedData {
         editor.apply();
     }
 
+    public String getBackgroundProfile() {
+        return preferences.getString(BACKIMAGE, "");
+    }
+
+    public void setBackgroundIMAGE(String url) {
+        editor.putString(BACKIMAGE, url);
+        editor.apply();
+    }
+
     public String getSECRETToken() {
         return preferences.getString(SECRET, "");
     }
@@ -126,4 +152,14 @@ public class SharedData {
         editor.putString(SECRET, secretToken);
         editor.apply();
     }
+
+    public Boolean isFirstTime() {
+        return preferences.getBoolean(FIRST_TIME, true);
+    }
+
+    public void setFirstTime(Boolean flag) {
+        editor.putBoolean(FIRST_TIME, flag);
+        editor.apply();
+    }
+
 }

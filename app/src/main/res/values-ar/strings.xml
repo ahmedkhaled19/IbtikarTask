@@ -8,7 +8,8 @@
     <string name="home">الرئيسية</string>
     <string name="notData">لا يوجد بيانات..برجاء فتح الانترنت</string>
     <string name="nointernet">لا يوجد انترنت</string>
-    <string name="notweets">No Tweets</string>
-
+    <string name="notweets">لا يوجد تويتات</string>
+    <string name="addacount">اضافة حساب </string>
+    <string name="switchaccount">تغير الحساب</string>
 
 </resources>

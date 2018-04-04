@@ -3,7 +3,6 @@ package khaled.ahmed.ibtikartask.Presnters;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -64,22 +63,26 @@ public class HomePresenter {
      */
     public void HandleData(PagableResponseList<User> users) {
         datalist.clear();
-        for (int i = 0; i < users.size(); i++) {
-            Users user = new Users(String.valueOf(users.get(i).getId()),
-                    users.get(i).getName(),
-                    users.get(i).getScreenName(),
-                    users.get(i).getOriginalProfileImageURL(),
-                    users.get(i).getProfileBannerURL(),
-                    users.get(i).getDescription());
-            datalist.add(user);
-        }
-        saveLocal();
-        if (cursor == -1) {
-            cursor = users.getNextCursor();
-            view.SetDataFirstTime(datalist);
+        if (users != null) {
+            for (int i = 0; i < users.size(); i++) {
+                Users user = new Users(String.valueOf(users.get(i).getId()),
+                        users.get(i).getName(),
+                        users.get(i).getScreenName(),
+                        users.get(i).getOriginalProfileImageURL(),
+                        users.get(i).getProfileBannerURL(),
+                        users.get(i).getDescription());
+                datalist.add(user);
+            }
+            saveLocal();
+            if (cursor == -1) {
+                cursor = users.getNextCursor();
+                view.SetDataFirstTime(datalist);
+            } else {
+                cursor = users.getNextCursor();
+                view.SetDataReload(datalist);
+            }
         } else {
-            cursor = users.getNextCursor();
-            view.SetDataReload(datalist);
+            view.SetDataFirstTime(datalist);
         }
     }
 
@@ -114,4 +117,39 @@ public class HomePresenter {
         }
     }
 
+    /**
+     * this method handle log out for multi account
+     */
+    public void Logout() {
+        ArrayList<Users> users;
+        if (SharedData.getInstance().getAccount() != null &&
+                !SharedData.getInstance().getAccount().isEmpty() && SharedData.getInstance().getAccount().size() != 1) {
+            users = SharedData.getInstance().getAccount();
+            for (int i = 0; i < users.size(); i++) {
+                if (users.get(i).getId().equals(SharedData.getInstance().getID())) {
+                    users.remove(i);
+                    break;
+                }
+            }
+            SharedData.getInstance().Edit(context).setID(users.get(0).getId());
+            SharedData.getInstance().Edit(context).setNAME(users.get(0).getName());
+            SharedData.getInstance().Edit(context).setPIMAGE(users.get(0).getImageURL());
+            SharedData.getInstance().Edit(context).setToken(users.get(0).getToken());
+            SharedData.getInstance().Edit(context).setSecretToken(users.get(0).getSToken());
+            SharedData.getInstance().Edit(context).setBackgroundIMAGE(users.get(0).getBackroundURl());
+            SharedData.getInstance().Edit(context).saveAccount(users);
+            view.ChangeAccount();
+        } else {
+            users = new ArrayList<>();
+            SharedData.getInstance().Edit(context).setID("");
+            SharedData.getInstance().Edit(context).setNAME("");
+            SharedData.getInstance().Edit(context).setPIMAGE("");
+            SharedData.getInstance().Edit(context).setBackgroundIMAGE("");
+            SharedData.getInstance().Edit(context).setToken("");
+            SharedData.getInstance().Edit(context).setSecretToken("");
+            SharedData.getInstance().Edit(context).saveAccount(users);
+            SharedData.getInstance().Edit(context).setIsLogged(false);
+            view.Logout();
+        }
+    }
 }

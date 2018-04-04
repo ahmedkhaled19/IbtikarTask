@@ -16,4 +16,7 @@ public interface HomeView {
 
     void SetDataReload(ArrayList<Users> list);
 
+    void ChangeAccount();
+
+    void Logout();
 }

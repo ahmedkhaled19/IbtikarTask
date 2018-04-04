@@ -15,9 +15,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -36,6 +38,7 @@ public class HomeActivity extends AppCompatActivity
 
     private static boolean active = false;
     private CircleImageView profileImage;
+    private ImageView background;
     private TextView name, noData;
     private HomePresenter presenter;
     private RecyclerView recyclerView;
@@ -62,13 +65,43 @@ public class HomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         View hView = navigationView.getHeaderView(0);
+        background = hView.findViewById(R.id.background_image);
         profileImage = hView.findViewById(R.id.imageView);
         name = hView.findViewById(R.id.username);
-        Picasso.with(getApplicationContext())
-                .load(SharedData.getInstance().getProfile()).into(profileImage);
-        name.setText(SharedData.getInstance().getNAME());
         presenter = new HomePresenter(this, HomeActivity.this);
+        setUserData();
         initviews();
+    }
+
+    /**
+     * this method put user image and name to view
+     */
+    private void setUserData() {
+        Picasso.with(getApplicationContext())
+                .load(SharedData.getInstance().getBackgroundProfile()).into(background, new Callback() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onError() {
+                profileImage.setImageResource(R.drawable.ic_background);
+            }
+        });
+        Picasso.with(getApplicationContext())
+                .load(SharedData.getInstance().getProfile()).into(profileImage, new Callback() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onError() {
+                profileImage.setImageResource(R.drawable.ic_person);
+            }
+        });
+        name.setText(SharedData.getInstance().getNAME());
     }
 
     /**
@@ -82,9 +115,6 @@ public class HomeActivity extends AppCompatActivity
         recyclerView = findViewById(R.id.home_recycler);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
-      /*  recyclerView.setItemAnimator(new DefaultItemAnimator());
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), LinearLayoutManager.VERTICAL);
-        recyclerView.addItemDecoration(dividerItemDecoration);*/
 
         usersList = new ArrayList<>();
         adapter = new FollowersAdapter(HomeActivity.this, usersList, recyclerView, progressBar);
@@ -143,11 +173,12 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_lang) {
-
+            startActivity(new Intent(HomeActivity.this, LanguageActivity.class));
         } else if (id == R.id.nav_logout) {
-
+            presenter.Logout();
+        } else if (id == R.id.nav_switch) {
+            startActivity(new Intent(HomeActivity.this, SwitchAccountActivity.class));
         }
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -202,6 +233,38 @@ public class HomeActivity extends AppCompatActivity
         adapter.setItems(list, true);
         adapter.setLoaded();
         mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    /**
+     * presenter call this method in case of user make logut but there is another account in app
+     * so it switch to it
+     */
+    @Override
+    public void ChangeAccount() {
+        onBackPressed();
+        presenter.cursor = -1;
+        usersList.clear();
+        adapter.cleardata();
+        progressBar.setVisibility(View.VISIBLE);
+        if (presenter.checkConnection()) {
+            setUserData();
+            presenter.cursor = -1;
+            presenter.getServerData();
+        } else {
+            progressBar.setVisibility(View.GONE);
+            noData.setVisibility(View.INVISIBLE);
+            setUserData();
+            showSnickBar();
+        }
+    }
+
+    /**
+     * presenter call this method in case of user make logut but there is no another account in app
+     */
+
+    @Override
+    public void Logout() {
+        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
     }
 
     private void showSnickBar() {

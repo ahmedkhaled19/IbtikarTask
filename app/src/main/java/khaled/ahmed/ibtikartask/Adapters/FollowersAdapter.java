@@ -136,6 +136,11 @@ public class FollowersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
+    public void cleardata() {
+        usersData.clear();
+        notifyDataSetChanged();
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView profile_picture;
         TextView name, handle, bio;

@@ -33,4 +33,19 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     public void moveToMain() {
         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finishAffinity();
+        System.exit(0);
+        super.onBackPressed();
+
+    }
 }
