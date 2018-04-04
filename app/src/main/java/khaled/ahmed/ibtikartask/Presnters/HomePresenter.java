@@ -1,6 +1,9 @@
 package khaled.ahmed.ibtikartask.Presnters;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -15,7 +18,7 @@ import twitter4j.User;
  * Created by ah.khaled1994@gmail.com on 4/3/2018.
  */
 
-public class HomePresneter {
+public class HomePresenter {
 
     public static long cursor;
     private HomeView view;
@@ -23,7 +26,7 @@ public class HomePresneter {
     private Context context;
     private ArrayList<Users> datalist;
 
-    public HomePresneter(HomeView view, Context context) {
+    public HomePresenter(HomeView view, Context context) {
         this.view = view;
         this.context = context;
         model = new HomModel();
@@ -31,18 +34,19 @@ public class HomePresneter {
         datalist = new ArrayList<>();
     }
 
-    /**
-     * this method call model to get my followers from api server for first time
-     */
-    public void getData(HomePresneter presneter) {
-        model.GetFollowers(context, presneter);
+    public void getData() {
+        if (checkConnection()) {
+            getServerData();
+        } else {
+            getLocalData();
+        }
     }
 
     /**
-     * this method call model to get my followers from api server by paging
+     * this method call model to get my followers from api server
      */
-    public void getDataReload(HomePresneter presneter) {
-        model.GetFollowers(context, presneter);
+    public void getServerData() {
+        model.GetFollowers(context, this);
     }
 
     /**
@@ -64,8 +68,8 @@ public class HomePresneter {
             Users user = new Users(String.valueOf(users.get(i).getId()),
                     users.get(i).getName(),
                     users.get(i).getScreenName(),
-                    users.get(i).getBiggerProfileImageURL(),
-                    users.get(i).getProfileBackgroundImageURL(),
+                    users.get(i).getOriginalProfileImageURL(),
+                    users.get(i).getProfileBannerURL(),
                     users.get(i).getDescription());
             datalist.add(user);
         }
@@ -94,6 +98,20 @@ public class HomePresneter {
         }
         backUp.addAll(datalist);
         SharedData.getInstance().Edit(context).saveUsers(backUp);
+    }
+
+    /**
+     * this method for check connection if connected then call api
+     * else will call data that cashed in shared
+     */
+    public boolean checkConnection() {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected() && networkInfo.isAvailable()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

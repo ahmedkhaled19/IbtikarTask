@@ -14,4 +14,5 @@
     <string name="home">Home</string>
     <string name="notData">No data found .. please open your network</string>
     <string name="nointernet">No internet connection</string>
+    <string name="notweets">No Tweets</string>
 </resources>

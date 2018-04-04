@@ -3,26 +3,27 @@ package khaled.ahmed.ibtikartask.Model;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import khaled.ahmed.ibtikartask.Presnters.HomePresenter;
+import khaled.ahmed.ibtikartask.Presnters.UserPresenter;
 import khaled.ahmed.ibtikartask.R;
 import khaled.ahmed.ibtikartask.Utils.SharedData;
-import twitter4j.PagableResponseList;
+import twitter4j.ResponseList;
+import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
-import twitter4j.User;
 import twitter4j.conf.ConfigurationBuilder;
 
 /**
- * Created by ah.khaled1994@gmail.com on 4/3/2018.
+ * Created by ah.khaled1994@gmail.com on 4/4/2018.
  */
 
-public class HomModel {
+public class UserModel {
 
     private Twitter twitter;
-    private HomePresenter presneter;
+    private UserPresenter presenter;
 
-    public void GetFollowers(Context context, HomePresenter presneter) {
+
+    public void getTweets(Context context, UserPresenter presenter, Long id) {
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
                 .setOAuthConsumerKey(context.getString(R.string.com_twitter_sdk_android_CONSUMER_KEY))
@@ -31,28 +32,27 @@ public class HomModel {
                 .setOAuthAccessTokenSecret(SharedData.getInstance().getSECRETToken());
         TwitterFactory tf = new TwitterFactory(cb.build());
         twitter = tf.getInstance();
-        this.presneter = presneter;
-        new getFollowersThread().execute(presneter.cursor);
+        this.presenter = presenter;
+        new getTweetsThread().execute(id);
     }
 
-    private class getFollowersThread extends AsyncTask<Long, Void, PagableResponseList<User>> {
+    private class getTweetsThread extends AsyncTask<Long, Void, ResponseList<Status>> {
 
         @Override
-        protected PagableResponseList<User> doInBackground(Long... cursor) {
-            PagableResponseList<User> users = null;
+        protected ResponseList<twitter4j.Status> doInBackground(Long... cursor) {
+            ResponseList<twitter4j.Status> tweets = null;
             try {
-                users = twitter.getFollowersList(Long.valueOf(SharedData.getInstance().getID()), cursor[0]);
+                tweets = twitter.getUserTimeline(cursor[0]);
             } catch (TwitterException e) {
                 e.printStackTrace();
             }
-            return users;
+            return tweets;
         }
 
         @Override
-        protected void onPostExecute(PagableResponseList<User> users) {
-            presneter.HandleData(users);
+        protected void onPostExecute(ResponseList<twitter4j.Status> tweets) {
+            presenter.sendData(tweets);
         }
     }
-
 
 }

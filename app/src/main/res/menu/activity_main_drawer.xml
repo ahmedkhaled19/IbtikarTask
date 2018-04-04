@@ -5,18 +5,15 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
+            android:id="@+id/nav_lang"
+            android:icon="@drawable/ic_language"
             android:title="@string/changeLang" />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/logout" />
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/logout" />
-        </menu>
-    </item>
 
 </menu>
