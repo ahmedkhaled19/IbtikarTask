@@ -52,7 +52,13 @@ public class UserActivity extends AppCompatActivity implements UserView {
             Name = intent.getStringExtra("name");
             Handle = intent.getStringExtra("handle");
             ImageProfile = intent.getStringExtra("image");
+            if (ImageProfile == null) {
+                ImageProfile = "";
+            }
             ImageBackground = intent.getStringExtra("back");
+            if (ImageBackground == null) {
+                ImageBackground = "";
+            }
         }
         presenter = new UserPresenter(UserActivity.this, this);
         initviews();
@@ -72,27 +78,34 @@ public class UserActivity extends AppCompatActivity implements UserView {
         recyclerView.addItemDecoration(dividerItemDecoration);
 
         //set data to view
-        Picasso.with(UserActivity.this).load(ImageBackground).into((bakground), new Callback() {
-            @Override
-            public void onSuccess() {
-            }
+        if (!ImageBackground.isEmpty() || !ImageBackground.equals("")) {
+            Picasso.with(UserActivity.this).load(ImageBackground).into((bakground), new Callback() {
+                @Override
+                public void onSuccess() {
+                }
 
-            @Override
-            public void onError() {
-                bakground.setBackgroundResource(R.drawable.ic_background);
-            }
-        });
-        Picasso.with(UserActivity.this).load(ImageProfile).into(profileImage, new Callback() {
-            @Override
-            public void onSuccess() {
-            }
+                @Override
+                public void onError() {
+                    bakground.setBackgroundResource(R.drawable.ic_background);
+                }
+            });
+        } else {
+            bakground.setImageResource(R.drawable.ic_background);
+        }
+        if (!ImageProfile.isEmpty() || !ImageProfile.equals("")) {
+            Picasso.with(UserActivity.this).load(ImageProfile).into(profileImage, new Callback() {
+                @Override
+                public void onSuccess() {
+                }
 
-            @Override
-            public void onError() {
-                profileImage.setBackgroundResource(R.drawable.ic_person);
-            }
-        });
-
+                @Override
+                public void onError() {
+                    profileImage.setBackgroundResource(R.drawable.ic_person);
+                }
+            });
+        } else {
+            profileImage.setImageResource(R.drawable.ic_person);
+        }
         name.setText(Name);
         handle.setText("@" + Handle);
         if (presenter.checkConnection()) {

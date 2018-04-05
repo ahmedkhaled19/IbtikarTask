@@ -78,30 +78,38 @@ public class HomeActivity extends AppCompatActivity
      * this method put user image and name to view
      */
     private void setUserData() {
-        Picasso.with(getApplicationContext())
-                .load(SharedData.getInstance().getBackgroundProfile()).into(background, new Callback() {
-            @Override
-            public void onSuccess() {
+        if (!SharedData.getInstance().getBackgroundProfile().isEmpty() || !SharedData.getInstance().getBackgroundProfile().equals("")) {
+            Picasso.with(getApplicationContext())
+                    .load(SharedData.getInstance().getBackgroundProfile()).into(background, new Callback() {
+                @Override
+                public void onSuccess() {
 
-            }
+                }
 
-            @Override
-            public void onError() {
-                profileImage.setImageResource(R.drawable.ic_background);
-            }
-        });
-        Picasso.with(getApplicationContext())
-                .load(SharedData.getInstance().getProfile()).into(profileImage, new Callback() {
-            @Override
-            public void onSuccess() {
+                @Override
+                public void onError() {
+                    background.setImageResource(R.drawable.ic_background);
+                }
+            });
+        } else {
+            background.setImageResource(R.drawable.ic_background);
+        }
+        if (!SharedData.getInstance().getProfile().isEmpty() || !SharedData.getInstance().getProfile().equals("")) {
+            Picasso.with(getApplicationContext())
+                    .load(SharedData.getInstance().getProfile()).into(profileImage, new Callback() {
+                @Override
+                public void onSuccess() {
 
-            }
+                }
 
-            @Override
-            public void onError() {
-                profileImage.setImageResource(R.drawable.ic_person);
-            }
-        });
+                @Override
+                public void onError() {
+                    profileImage.setImageResource(R.drawable.ic_person);
+                }
+            });
+        } else {
+            profileImage.setImageResource(R.drawable.ic_person);
+        }
         name.setText(SharedData.getInstance().getNAME());
     }
 
@@ -190,6 +198,7 @@ public class HomeActivity extends AppCompatActivity
      */
     @Override
     public void SetDataLocal(ArrayList<Users> list) {
+        usersList = list;
         if (list.isEmpty() || list.size() == 0 && active) {
             progressBar.setVisibility(View.GONE);
             noData.setVisibility(View.VISIBLE);
