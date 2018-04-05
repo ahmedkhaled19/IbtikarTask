@@ -16,6 +16,16 @@
 
     </style>
 
+    <style name="MyToolbarTheme" parent="android:Theme.Holo">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="android:titleTextStyle">@color/white</item>
+        <!-- To change the popup menu and app text color  -->
+        <item name="android:textColor">@color/white</item>
+        <!-- To change the background of options menu-->
+        <item name="android:itemBackground">@color/white</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

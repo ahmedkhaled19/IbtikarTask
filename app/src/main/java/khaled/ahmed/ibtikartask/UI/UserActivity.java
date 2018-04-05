@@ -1,14 +1,12 @@
 package khaled.ahmed.ibtikartask.UI;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -28,8 +26,8 @@ import twitter4j.Status;
 public class UserActivity extends AppCompatActivity implements UserView {
 
     private static boolean active = false;
-    private CircleImageView back, profileImage;
-    private ImageView bakground;
+    private CircleImageView profileImage;
+    private ImageView bakground, back;
     private TextView name, handle, noData;
     private ProgressBar progressBar;
     private Intent intent;

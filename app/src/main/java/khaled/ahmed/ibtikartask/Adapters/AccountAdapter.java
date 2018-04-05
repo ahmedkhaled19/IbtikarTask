@@ -59,13 +59,18 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedData.getInstance().Edit(context).setID(u.getId());
-                SharedData.getInstance().Edit(context).setNAME(u.getName());
-                SharedData.getInstance().Edit(context).setPIMAGE(u.getImageURL());
-                SharedData.getInstance().Edit(context).setToken(u.getToken());
-                SharedData.getInstance().Edit(context).setSecretToken(u.getSToken());
-                SharedData.getInstance().Edit(context).setBackgroundIMAGE(u.getBackroundURl());
-                context.startActivity(new Intent(context, HomeActivity.class));
+                if (SharedData.getInstance().Edit(context).getID().equals(u.getId())) {
+                    context.startActivity(new Intent(context, HomeActivity.class));
+                } else {
+                    SharedData.getInstance().Edit(context).setID(u.getId());
+                    SharedData.getInstance().Edit(context).setNAME(u.getName());
+                    SharedData.getInstance().Edit(context).setPIMAGE(u.getImageURL());
+                    SharedData.getInstance().Edit(context).setToken(u.getToken());
+                    SharedData.getInstance().Edit(context).setSecretToken(u.getSToken());
+                    SharedData.getInstance().Edit(context).setBackgroundIMAGE(u.getBackroundURl());
+                    SharedData.getInstance().Edit(context).saveUsers(new ArrayList<Users>());
+                    context.startActivity(new Intent(context, HomeActivity.class));
+                }
             }
         });
 

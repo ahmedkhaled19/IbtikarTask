@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layoutDirection="locale"
+    android:textDirection="locale"
     tools:context="khaled.ahmed.ibtikartask.UI.UserActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -34,16 +36,16 @@
                     android:scaleType="fitXY"
                     app:layout_collapseMode="parallax" />
 
-                <de.hdodenhof.circleimageview.CircleImageView
+
+                <ImageView
                     android:id="@+id/back"
                     android:layout_width="38dp"
                     android:layout_height="38dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
+                    android:layoutDirection="locale"
                     android:src="@drawable/ic_back"
-                    app:civ_border_color="@color/black"
-                    app:civ_border_width="1dp"
-                    app:layout_collapseMode="parallax" />
+                    android:textDirection="locale" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/userimage"

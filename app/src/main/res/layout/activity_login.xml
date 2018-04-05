@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     android:background="@color/blue"
     android:gravity="center"
+    android:layoutDirection="locale"
     android:orientation="vertical"
+    android:textDirection="locale"
     tools:context="khaled.ahmed.ibtikartask.UI.LoginActivity">
 
     <ImageView

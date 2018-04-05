@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Callback;
@@ -189,7 +190,7 @@ public class HomeActivity extends AppCompatActivity
      */
     @Override
     public void SetDataLocal(ArrayList<Users> list) {
-        if (list.isEmpty() && active) {
+        if (list.isEmpty() || list.size() == 0 && active) {
             progressBar.setVisibility(View.GONE);
             noData.setVisibility(View.VISIBLE);
         } else {
@@ -268,14 +269,18 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void showSnickBar() {
+        RelativeLayout layout = findViewById(R.id.relative);
         mSwipeRefreshLayout.setRefreshing(false);
         Snackbar snackbar = Snackbar
-                .make(findViewById(android.R.id.content), getString(R.string.nointernet), Snackbar.LENGTH_LONG);
+                .make(layout, getString(R.string.nointernet), Snackbar.LENGTH_LONG);
         // Changing action button text color
         View sbView = snackbar.getView();
         TextView textView = sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
+        if (usersList.size() == 0 || usersList.isEmpty()) {
+            noData.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
