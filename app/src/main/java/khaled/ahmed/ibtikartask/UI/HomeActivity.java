@@ -146,6 +146,19 @@ public class HomeActivity extends AppCompatActivity
             public void onRefresh() {
                 noData.setVisibility(View.INVISIBLE);
                 if (presenter.checkConnection()) {
+                    if (adapter.IsNullLoadMore()) {
+                        adapter.setLoaded();
+                        adapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+                            @Override
+                            public void onLoadMore() {
+                                if (presenter.cursor != -1 && presenter.checkConnection()) {
+                                    usersList.add(null);
+                                    adapter.notifyItemInserted(usersList.size() - 1);
+                                    presenter.getServerData();
+                                }
+                            }
+                        });
+                    }
                     presenter.cursor = -1;
                     presenter.getServerData();
                 } else {
@@ -224,6 +237,20 @@ public class HomeActivity extends AppCompatActivity
             adapter.setItems(usersList, false);
         }
         mSwipeRefreshLayout.setRefreshing(false);
+        if (adapter.IsNullLoadMore()) {
+            adapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+                @Override
+                public void onLoadMore() {
+                    if (presenter.cursor != -1 && presenter.checkConnection()) {
+                        usersList.add(null);
+                        adapter.notifyItemInserted(usersList.size() - 1);
+                        presenter.getServerData();
+                    } else {
+                        adapter.setLoaded();
+                    }
+                }
+            });
+        }
     }
 
     /**
@@ -237,6 +264,7 @@ public class HomeActivity extends AppCompatActivity
                 adapter.notifyItemRemoved(usersList.size());
             }
             adapter.setOnLoadMoreListener(null);
+            adapter.setLoaded();
             return;
         }
         usersList.remove(usersList.size() - 1);

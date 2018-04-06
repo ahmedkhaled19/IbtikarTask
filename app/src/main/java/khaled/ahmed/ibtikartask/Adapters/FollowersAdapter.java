@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ public class FollowersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private ProgressBar progressBar;
     private boolean isLoading;
     private OnLoadMoreListener onLoadMoreListener;
-    private int visibleThreshold = 5;
+    private int visibleThreshold = 1;
     private int lastVisibleItem, totalItemCount;
 
     public FollowersAdapter(Context context, ArrayList<Users> users, RecyclerView recyclerView, ProgressBar progressBar) {
@@ -49,13 +50,11 @@ public class FollowersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 super.onScrolled(recyclerView, dx, dy);
                 totalItemCount = linearLayoutManager.getItemCount();
                 lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
-                if (lastVisibleItem + visibleThreshold >= 20) {
-                    if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
-                        if (onLoadMoreListener != null) {
-                            onLoadMoreListener.onLoadMore();
-                        }
-                        isLoading = true;
+                if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+                    if (onLoadMoreListener != null) {
+                        onLoadMoreListener.onLoadMore();
                     }
+                    isLoading = true;
                 }
             }
         });
@@ -67,6 +66,10 @@ public class FollowersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public void setOnLoadMoreListener(OnLoadMoreListener mOnLoadMoreListener) {
         this.onLoadMoreListener = mOnLoadMoreListener;
+    }
+
+    public boolean IsNullLoadMore(){
+        return this.onLoadMoreListener == null ;
     }
 
     @Override

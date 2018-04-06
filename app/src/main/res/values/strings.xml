@@ -12,7 +12,7 @@
     <string name="changeLang">Change Language</string>
     <string name="logout">Log out</string>
     <string name="home">Home</string>
-    <string name="notData">No data found .. please open your network</string>
+    <string name="notData">No data found </string>
     <string name="nointernet">No internet connection</string>
     <string name="notweets">No Tweets</string>
     <string name="addacount">Add new account</string>
