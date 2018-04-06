@@ -147,17 +147,7 @@ public class HomeActivity extends AppCompatActivity
                 noData.setVisibility(View.INVISIBLE);
                 if (presenter.checkConnection()) {
                     if (adapter.IsNullLoadMore()) {
-                        adapter.setLoaded();
-                        adapter.setOnLoadMoreListener(new OnLoadMoreListener() {
-                            @Override
-                            public void onLoadMore() {
-                                if (presenter.cursor != -1 && presenter.checkConnection()) {
-                                    usersList.add(null);
-                                    adapter.notifyItemInserted(usersList.size() - 1);
-                                    presenter.getServerData();
-                                }
-                            }
-                        });
+                        SetLoadListener();
                     }
                     presenter.cursor = -1;
                     presenter.getServerData();
@@ -237,20 +227,6 @@ public class HomeActivity extends AppCompatActivity
             adapter.setItems(usersList, false);
         }
         mSwipeRefreshLayout.setRefreshing(false);
-        if (adapter.IsNullLoadMore()) {
-            adapter.setOnLoadMoreListener(new OnLoadMoreListener() {
-                @Override
-                public void onLoadMore() {
-                    if (presenter.cursor != -1 && presenter.checkConnection()) {
-                        usersList.add(null);
-                        adapter.notifyItemInserted(usersList.size() - 1);
-                        presenter.getServerData();
-                    } else {
-                        adapter.setLoaded();
-                    }
-                }
-            });
-        }
     }
 
     /**
@@ -333,6 +309,25 @@ public class HomeActivity extends AppCompatActivity
         snackbar.show();
         if (usersList.size() == 0 || usersList.isEmpty()) {
             noData.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     * set load data in case of swipe do refresh
+     */
+    private void SetLoadListener() {
+        if (adapter.IsNullLoadMore()) {
+            adapter.setLoaded();
+            adapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+                @Override
+                public void onLoadMore() {
+                    if (presenter.cursor != -1 && presenter.checkConnection()) {
+                        usersList.add(null);
+                        adapter.notifyItemInserted(usersList.size() - 1);
+                        presenter.getServerData();
+                    }
+                }
+            });
         }
     }
 
