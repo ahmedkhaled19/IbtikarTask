@@ -82,7 +82,7 @@ public class HomePresenter {
                 view.SetDataReload(datalist);
             }
         } else {
-            view.SetDataFirstTime(datalist);
+            view.serverError();
         }
     }
 

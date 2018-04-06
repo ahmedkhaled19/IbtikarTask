@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -198,7 +199,6 @@ public class HomeActivity extends AppCompatActivity
      */
     @Override
     public void SetDataLocal(ArrayList<Users> list) {
-        usersList = list;
         if (list.isEmpty() || list.size() == 0 && active) {
             progressBar.setVisibility(View.GONE);
             noData.setVisibility(View.VISIBLE);
@@ -213,11 +213,12 @@ public class HomeActivity extends AppCompatActivity
      */
     @Override
     public void SetDataFirstTime(ArrayList<Users> list) {
-        usersList.clear();
         if (list.isEmpty() && active) {
             progressBar.setVisibility(View.GONE);
             noData.setVisibility(View.VISIBLE);
+            adapter.cleardata();
         } else {
+            usersList = new ArrayList<>();
             progressBar.setVisibility(View.INVISIBLE);
             usersList.addAll(list);
             adapter.setItems(usersList, false);
@@ -243,6 +244,21 @@ public class HomeActivity extends AppCompatActivity
         adapter.setItems(list, true);
         adapter.setLoaded();
         mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    /**
+     * this method presenter call it in case of list that come from api come null
+     * because of rate limit or something else
+     */
+    @Override
+    public void serverError() {
+        if (active) {
+            if (usersList.isEmpty()) {
+                progressBar.setVisibility(View.GONE);
+                noData.setVisibility(View.VISIBLE);
+            }
+            Toast.makeText(HomeActivity.this, getString(R.string.servererror), Toast.LENGTH_LONG).show();
+        }
     }
 
     /**

@@ -17,4 +17,5 @@
     <string name="notweets">No Tweets</string>
     <string name="addacount">Add new account</string>
     <string name="switchaccount">Switch account</string>
+    <string name="servererror">there is error in server</string>
 </resources>
